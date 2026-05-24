@@ -87,21 +87,17 @@ export default function App() {
         {/* Header Section */}
         <header className="text-center mb-12 pt-8">
           <div className="inline-block mb-4">
-            <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-amber-600 to-red-700 rounded-full flex items-center justify-center shadow-lg">
-              <svg viewBox="0 0 100 100" className="w-12 h-12 text-white">
-                <circle cx="50" cy="50" r="35" fill="currentColor" />
-                <circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" strokeWidth="2" />
-                <circle cx="50" cy="50" r="15" fill="none" stroke="currentColor" strokeWidth="2" />
-                <path d="M50,15 L50,25 M50,75 L50,85 M15,50 L25,50 M75,50 L85,50" stroke="currentColor" strokeWidth="3" />
-                <path d="M28,28 L35,35 M72,28 L65,35 M72,72 L65,65 M28,72 L35,65" stroke="currentColor" strokeWidth="2" />
-              </svg>
-            </div>
+            <img
+              src="/Cauhpohualli_logo.png"
+              alt="Cauhpohualli logo"
+              className="w-36 h-36 mx-auto mb-4 object-contain drop-shadow-lg"
+            />
           </div>
           
-          <h1 className="mb-3 text-white font-bold" style={{ fontFamily: 'Times New Roman, serif', fontSize: '24px' }}>
+          <h1 className="mb-3 text-white font-bold text-4xl md:text-5xl tracking-wide" style={{ fontFamily: 'Times New Roman, serif' }}>
             Tonalamatl Calculator
           </h1>
-          <p className="text-white/90 max-w-2xl mx-auto mb-4">
+          <p className="text-white/70 max-w-2xl mx-auto mb-4 text-sm md:text-base">
             Discover your energy day in the ancient Aztec sacred calendar. The Tonalpohualli is a 260-day cycle combining 20 day signs with 13 sacred numbers.
           </p>
         </header>
@@ -109,17 +105,18 @@ export default function App() {
         {/* Today's Sign Energy Section */}
         <Card className="mb-8 bg-white/40 backdrop-blur-md shadow-xl border border-white/50">
           <div className="p-6">
-            <h2 className="text-center mb-4 text-white" style={{ fontFamily: 'Times New Roman, serif', fontSize: '24px' }}>
+            <p className="text-center text-white/60 mb-1 text-xs uppercase tracking-widest font-semibold">At a Glance</p>
+            <h2 className="text-center mb-4 text-white font-semibold text-xl" style={{ fontFamily: 'Times New Roman, serif' }}>
               Today's Sign Energy
             </h2>
             <p className="text-center text-white/80 mb-4">
               {today.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
             </p>
             
-            <div className="flex flex-col md:flex-row items-center justify-center divide-y md:divide-y-0 md:divide-x divide-white/30">
+            <div className="flex flex-col md:flex-row items-start justify-center divide-y md:divide-y-0 md:divide-x divide-white/30">
               {/* Day Sign */}
               <div className="text-center px-8 py-4">
-                <p className="text-white/70 mb-2 font-bold">Day Sign</p>
+                <p className="text-white/60 mb-2 text-xs uppercase tracking-widest font-semibold">Day Sign</p>
                 <div className="flex justify-center mb-2">
                   <DaySignGlyph
                     index={todayDaySign.index}
@@ -133,7 +130,7 @@ export default function App() {
 
               {/* Sacred Number */}
               <div className="text-center px-8 py-4">
-                <p className="text-white/70 mb-2 font-bold">Sacred Number</p>
+                <p className="text-white/60 mb-2 text-xs uppercase tracking-widest font-semibold">Sacred Number</p>
                 <div className="flex justify-center mb-2">
                   <SacredNumberDots number={todaySacredNumber.number} size="md" />
                 </div>
@@ -142,7 +139,7 @@ export default function App() {
 
               {/* Complete Day Name */}
               <div className="text-center px-8 py-4">
-                <p className="text-white/70 mb-4 font-bold">Complete Day</p>
+                <p className="text-white mb-4 text-xs uppercase tracking-widest font-semibold">Complete Day</p>
                 <p className="text-white">
                   {todaySacredNumber.number} {todayDaySign.nahuatl}
                 </p>
@@ -160,8 +157,8 @@ export default function App() {
         {/* Date Input Section */}
         <Card className="mb-12 bg-white/40 backdrop-blur-md shadow-xl border border-white/50">
           <div className="p-8">
-            <p className="text-center text-white/80 mb-2">Find out more about your Aztec day sign</p>
-            <h2 className="text-center mb-6 text-white font-bold" style={{ fontFamily: 'Times New Roman, serif', fontSize: '24px' }}>Enter Your Birth Date</h2>
+            <p className="text-center text-white/60 mb-1 text-xs uppercase tracking-widest font-semibold">Find out more about your Aztec day sign</p>
+            <h2 className="text-center mb-6 text-white font-semibold text-xl" style={{ fontFamily: 'Times New Roman, serif' }}>Enter Your Birth Date</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <div>
@@ -226,11 +223,11 @@ export default function App() {
                 <div className="absolute inset-0 bg-gradient-to-br from-amber-600/10 to-red-600/10" />
                 <div className="relative p-8 text-center">
                   <div className="mb-6">
-                    <p className="text-white/70 mb-2" style={{ fontFamily: 'Times New Roman, serif', fontSize: '24px' }}>Your Sacred Day Sign</p>
-                    <h2 className="text-transparent bg-clip-text bg-gradient-to-r from-amber-900 to-red-900 mb-1">
+                    <p className="text-white/60 mb-2 text-xs uppercase tracking-widest font-semibold">Your Sacred Day Sign</p>
+                    <h2 className="text-white mb-1 text-5xl font-bold tracking-wide" style={{ fontFamily: 'Times New Roman, serif' }}>
                       {result.daySign.nahuatl.toUpperCase()}
                     </h2>
-                    <p className="text-white/90">{result.daySign.english}</p>
+                    <p className="text-white/70 text-sm italic mt-1">{result.daySign.english}</p>
                   </div>
 
                   <div className="flex justify-center mb-6">
@@ -242,18 +239,18 @@ export default function App() {
                   </div>
 
                   <div className="mt-6 mb-4">
-                    <p className="text-white font-bold mb-2">Sacred Number</p>
+                    <p className="text-white/60 mb-2 text-xs uppercase tracking-widest font-semibold">Sacred Number</p>
                     <div className="inline-block px-8 py-4 bg-amber-100/60 backdrop-blur-sm rounded-lg border border-amber-200/50">
-                      <span className="text-black">{result.sacredNumber.number}</span>
+                      <span className="text-black text-2xl font-bold">{result.sacredNumber.number}</span>
                     </div>
                   </div>
 
                   <SacredNumberDots number={result.sacredNumber.number} size="lg" />
 
                   <div className="mt-6 mb-6">
-                    <p className="text-white font-bold mb-3">Complete Day Name</p>
+                    <p className="text-white mb-3 text-xs uppercase tracking-widest font-semibold">Complete Day Name</p>
                     <div className="inline-block px-8 py-4 bg-amber-100/60 backdrop-blur-sm rounded-lg border border-amber-200/50">
-                      <span className="text-black">
+                      <span className="text-black text-xl font-semibold">
                         {result.sacredNumber.number} {result.daySign.nahuatl}
                       </span>
                     </div>
@@ -287,11 +284,11 @@ export default function App() {
 
                 <TabsContent value="meaning" className="mt-6 space-y-4">
                   <div>
-                    <h3 className="text-white mb-2">Meaning & Symbolism</h3>
+                    <h3 className="text-white/60 mb-2 text-xs uppercase tracking-widest font-bold">Meaning & Symbolism</h3>
                     <p className="text-white/80">{result.daySign.meaning}</p>
                   </div>
                   <div>
-                    <h3 className="text-white mb-2">Characteristics</h3>
+                    <h3 className="text-white/60 mb-2 text-xs uppercase tracking-widest font-bold">Characteristics</h3>
                     <p className="text-white/80">{result.daySign.characteristics}</p>
                   </div>
                   {result.daySign.direction && (
@@ -314,7 +311,7 @@ export default function App() {
 
                 <TabsContent value="deity" className="mt-6 space-y-4">
                   <div>
-                    <h3 className="text-white mb-2">Ruling Deity</h3>
+                    <h3 className="text-white/60 mb-2 text-xs uppercase tracking-widest font-bold">Ruling Deity</h3>
                     <p className="text-white">{result.daySign.deity}</p>
                   </div>
                   <div>
@@ -330,11 +327,11 @@ export default function App() {
 
                 <TabsContent value="number" className="mt-6 space-y-4">
                   <div>
-                    <h3 className="text-white mb-2">Sacred Number {result.sacredNumber.number}</h3>
+                    <h3 className="text-white/60 mb-2 text-xs uppercase tracking-widest font-bold">Sacred Number {result.sacredNumber.number}</h3>
                     <p className="text-white/80">{result.sacredNumber.meaning}</p>
                   </div>
                   <div>
-                    <h3 className="text-white mb-2">Numerical Energy</h3>
+                    <h3 className="text-white/60 mb-2 text-xs uppercase tracking-widest font-bold">Numerical Energy</h3>
                     <p className="text-white/80">{result.sacredNumber.energy}</p>
                   </div>
                   <div className="bg-amber-100/60 backdrop-blur-sm p-4 rounded-lg border border-amber-200/50 mt-4">
@@ -347,17 +344,17 @@ export default function App() {
 
                 <TabsContent value="trecena" className="mt-6 space-y-4">
                   <div>
-                    <h3 className="text-white mb-2">Trecena (13-Day Period)</h3>
+                    <h3 className="text-white/60 mb-2 text-xs uppercase tracking-widest font-bold">Trecena (13-Day Period)</h3>
                     <p className="text-white/80">
                       Your day falls within the trecena beginning with <strong>{result.trecenaInfo.start}</strong>
                     </p>
                   </div>
                   <div>
-                    <h3 className="text-white mb-2">Trecena Ruling Deity</h3>
+                    <h3 className="text-white/60 mb-2 text-xs uppercase tracking-widest font-bold">Trecena Ruling Deity</h3>
                     <p className="text-white/80">{result.trecenaInfo.deity}</p>
                   </div>
                   <div>
-                    <h3 className="text-white mb-2">Period Energy</h3>
+                    <h3 className="text-white/60 mb-2 text-xs uppercase tracking-widest font-bold">Period Energy</h3>
                     <p className="text-white/80">{result.trecenaInfo.energy}</p>
                   </div>
                   <div className="bg-amber-100/60 backdrop-blur-sm p-4 rounded-lg border border-amber-200/50 mt-4">
@@ -370,7 +367,7 @@ export default function App() {
 
                 <TabsContent value="xiuhpohualli" className="mt-6 space-y-4">
                   <div>
-                    <h3 className="text-white mb-2">Year Bearer</h3>
+                    <h3 className="text-white/60 mb-2 text-xs uppercase tracking-widest font-bold">Year Bearer</h3>
                     <p className="text-white/80">
                       <strong>{result.yearBearer.yearNumber} {getYearBearerName(result.yearBearer.yearSign)}</strong>
                     </p>
@@ -406,7 +403,7 @@ export default function App() {
                   </div>
 
                   <div>
-                    <h3 className="text-white mb-2">Xiuhpohualli Date</h3>
+                    <h3 className="text-white/60 mb-2 text-xs uppercase tracking-widest font-bold">Xiuhpohualli Date</h3>
                     <p className="text-white/80">
                       Day {result.xiuhpohualli.dayOfYear} of the year: {result.xiuhpohualli.monthName}, Day {result.xiuhpohualli.monthDay}
                     </p>
@@ -435,7 +432,8 @@ export default function App() {
         <div className="container mx-auto px-4 pb-24 max-w-5xl space-y-8">
           <Card className="bg-white/40 backdrop-blur-md shadow-xl border border-white/50">
             <div className="p-6">
-              <h2 className="text-center mb-6 text-white font-bold" style={{ fontFamily: 'Times New Roman, serif', fontSize: '24px' }}>Learn About the Tonalpohualli</h2>
+              <p className="text-center text-white/60 mb-1 text-xs uppercase tracking-widest font-semibold">Education</p>
+              <h2 className="text-center mb-6 text-white font-semibold text-xl" style={{ fontFamily: 'Times New Roman, serif' }}>Learn About the Tonalpohualli</h2>
                 
                 <Accordion type="single" collapsible className="space-y-2">
                   <AccordionItem value="item-1">
