@@ -9,11 +9,21 @@ const KNOWN_DAY_SIGN = 2; // Ehecatl (index 2, but 0-based means position 1)
 const KNOWN_SACRED_NUMBER = 9;
 
 // Xiuhpohualli (365-day solar calendar) reference
-// Year 2025 = 13 Calli, begins March 12, 2025 at 6pm (18:00)
+// Year 2025 = 13 Calli, begins March 12, 2025 at midnight (12am CST, Mexico City time)
 const KNOWN_YEAR_DATE = new Date(2025, 2, 12); // March 12, 2025
 const KNOWN_YEAR_BEARER = 3; // Calli (House) - day sign index 3
 const KNOWN_YEAR_NUMBER = 13;
-const KNOWN_YEAR_HOUR = 18; // 6pm
+const KNOWN_YEAR_HOUR = 0; // midnight — Calli years always begin at midnight (12am CST)
+
+// Start hour is determined by year bearer sign, not a sequential cycle.
+// Together the four 6-hour quarters account for the ~6h annual drift (≈ Gregorian leap year).
+// All times are CST (Mexico City local time).
+const YEAR_BEARER_HOURS: { [sign: number]: number } = {
+  8:  6,  // Tochtli (Rabbit) → 6am
+  13: 12, // Acatl   (Reed)   → noon (12pm)
+  18: 18, // Tecpatl (Flint)  → 6pm
+  3:  0,  // Calli   (House)  → midnight (12am)
+};
 
 export interface TonalliResult {
   daySign: number; // 1-20
@@ -151,11 +161,9 @@ export function calculateYearBearer(gregorianDate: Date): YearBearerResult {
   if (yearNumber < 0) yearNumber += 13;
   yearNumber = yearNumber + 1; // Convert to 1-based
   
-  // Hour of day advances 6 hours each year (0, 6, 12, 18)
-  const hourCycle = [18, 0, 6, 12]; // Starting with 6pm for 2025
-  let hourIndex = (yearsElapsed % 4);
-  if (hourIndex < 0) hourIndex += 4;
-  const startHour = hourCycle[hourIndex];
+  // Start hour is fixed per year bearer sign (CST, Mexico City time):
+  //   Tochtli → 6am | Acatl → midnight | Tecpatl → 6pm | Calli → noon
+  const startHour = YEAR_BEARER_HOURS[yearSign] ?? 0;
   
   // Calculate position in 52-year Calendar Round
   // The Calendar Round completes when both the 365-day and 260-day calendars return to the same position
@@ -187,6 +195,13 @@ export function getYearBearerName(yearSign: number): string {
 }
 
 /**
+ * Check whether a given year is a Gregorian leap year
+ */
+function isLeapYear(year: number): boolean {
+  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+}
+
+/**
  * Calculate position in Xiuhpohualli (day of year in 365-day calendar)
  */
 export function calculateXiuhpohualli(gregorianDate: Date): {
@@ -196,9 +211,25 @@ export function calculateXiuhpohualli(gregorianDate: Date): {
 } {
   const yearBearer = calculateYearBearer(gregorianDate);
   const yearStart = yearBearer.startDate;
-  
+
   // Calculate days since year start
-  const dayOfYear = daysBetween(yearStart, gregorianDate) + 1;
+  let dayOfYear = daysBetween(yearStart, gregorianDate) + 1;
+
+  // The Xiuhpohualli is always exactly 365 days — it has no leap year.
+  // yearStart is always March 12, so any Feb 29 that falls inside this year
+  // period belongs to yearStart.getFullYear() + 1.
+  // If that year is a leap year and Feb 29 has already passed by gregorianDate,
+  // subtract 1 so the Aztec day count stays within 1–365.
+  const nextCalYear = yearStart.getFullYear() + 1;
+  if (isLeapYear(nextCalYear)) {
+    const feb29 = new Date(nextCalYear, 1, 29); // Feb 29 of the following calendar year
+    if (feb29 <= gregorianDate) {
+      dayOfYear -= 1;
+    }
+  }
+
+  // Safety clamp — should never be needed, but guards against edge cases
+  dayOfYear = Math.max(1, Math.min(365, dayOfYear));
   
   // Xiuhpohualli has 18 months of 20 days + 5 unlucky days (Nemontemi)
   const xiuhpohualli_months = [

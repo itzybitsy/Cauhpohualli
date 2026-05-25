@@ -259,6 +259,58 @@ export default function App() {
               </div>
             </Card>
 
+            {/* Nemontemi Banner */}
+            {result.xiuhpohualli.monthName === 'Nemontemi' && (
+              <Card className="bg-gradient-to-br from-slate-700/70 to-slate-900/70 backdrop-blur-md shadow-2xl border border-slate-400/40 overflow-hidden">
+                <div className="relative p-6 md:p-8">
+                  {/* subtle decorative ring */}
+                  <div className="absolute -top-6 -right-6 w-32 h-32 rounded-full border-4 border-slate-400/20 pointer-events-none" />
+                  <div className="absolute -bottom-8 -left-8 w-40 h-40 rounded-full border-4 border-slate-400/10 pointer-events-none" />
+
+                  <div className="relative text-center">
+                    <p className="text-slate-300/80 mb-1 text-xs uppercase tracking-widest font-semibold">
+                      Xiuhpohualli · Day {result.xiuhpohualli.dayOfYear} of 365
+                    </p>
+                    <h3 className="text-white text-3xl font-bold mb-1 tracking-wide" style={{ fontFamily: 'Times New Roman, serif' }}>
+                      Nemontemi
+                    </h3>
+                    <p className="text-slate-300/70 italic text-sm mb-5">
+                      Day {result.xiuhpohualli.monthDay} of 5 · The Empty Days
+                    </p>
+
+                    <div className="flex justify-center gap-2 mb-6">
+                      {[1, 2, 3, 4, 5].map((d) => (
+                        <div
+                          key={d}
+                          className={`w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs font-bold transition-all ${
+                            d === result.xiuhpohualli.monthDay
+                              ? 'bg-slate-300 border-slate-200 text-slate-900'
+                              : 'bg-slate-600/40 border-slate-500/50 text-slate-400'
+                          }`}
+                        >
+                          {d}
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-500/30 p-5 text-left max-w-xl mx-auto">
+                      <p className="text-slate-200 leading-relaxed">
+                        Nemontemi are the <strong className="text-white">5 empty days</strong> that close the 365-day
+                        solar year — a sacred pause beyond the reach of ordinary time. They are set apart for
+                        rest, reflection, and inner renewal, so that the world may breathe and gather strength
+                        before the new cycle begins.
+                      </p>
+                      <p className="text-slate-300/80 mt-3 leading-relaxed">
+                        To be born during the Nemontemi is to carry the energy of the threshold — the still
+                        point between endings and beginnings. You arrived in a moment of quiet power, poised
+                        at the edge of a new cycle, shaped by rest and rebirth.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            )}
+
             {/* Detailed Information Tabs */}
             <Card className="bg-white/40 backdrop-blur-md shadow-xl border border-white/50">
               <Tabs defaultValue="meaning" className="p-6">
@@ -372,7 +424,7 @@ export default function App() {
                       <strong>{result.yearBearer.yearNumber} {getYearBearerName(result.yearBearer.yearSign)}</strong>
                     </p>
                     <p className="text-white/80 mt-2">
-                      Year begins: {result.yearBearer.startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} at {result.yearBearer.startHour === 0 ? 'midnight' : result.yearBearer.startHour === 6 ? '6am' : result.yearBearer.startHour === 12 ? 'noon' : '6pm'}
+                      Year begins: {result.yearBearer.startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} at {result.yearBearer.startHour === 0 ? 'midnight (12am)' : result.yearBearer.startHour === 6 ? '6am' : result.yearBearer.startHour === 12 ? 'noon (12pm)' : '6pm'} CST (Mexico City time)
                     </p>
                   </div>
                   
@@ -525,24 +577,80 @@ export default function App() {
                     <AccordionContent className="text-white/80">
                       <div className="space-y-3">
                         <p>
-                          The Xiuhpohualli is the 365-day solar calendar consisting of 18 months of 20 days each, plus 
-                          5 unlucky days called Nemontemi. Each year is named for its "year bearer"—a specific day sign 
+                          The Xiuhpohualli is the 365-day solar calendar consisting of 18 months of 20 days each, plus
+                          5 unlucky days called Nemontemi. Each year is named for its "year bearer"—a specific day sign
                           combined with a sacred number.
                         </p>
                         <p>
-                          Only four day signs can be year bearers: <strong>Calli (House), Tochtli (Rabbit), Acatl (Reed), 
-                          and Tecpatl (Flint)</strong>. These cycle in order, each paired with numbers 1-13. The new year 
+                          Only four day signs can be year bearers: <strong>Calli (House), Tochtli (Rabbit), Acatl (Reed),
+                          and Tecpatl (Flint)</strong>. These cycle in order, each paired with numbers 1-13. The new year
                           begins on <strong>March 12</strong> each year.
                         </p>
                         <p>
-                          Each year starts at a different quarter of the day, advancing 6 hours annually in this sequence: 
-                          6pm → midnight → 6am → noon → 6pm. After 52 years, both the 260-day and 365-day calendars return 
-                          to their original positions, completing the Calendar Round.
+                          Each year's start time is determined by its year bearer sign — the four bearers each
+                          correspond to one quarter of the day (all times in <strong>CST, Mexico City time</strong>):
+                        </p>
+                        <div className="grid grid-cols-2 gap-2 my-3">
+                          <div className="bg-amber-100/60 backdrop-blur-sm p-3 rounded border border-amber-200/50">
+                            <p className="text-black font-semibold">Tochtli (Rabbit)</p>
+                            <p className="text-black/80">6am CST</p>
+                          </div>
+                          <div className="bg-amber-100/60 backdrop-blur-sm p-3 rounded border border-amber-200/50">
+                            <p className="text-black font-semibold">Acatl (Reed)</p>
+                            <p className="text-black/80">12pm — noon CST</p>
+                          </div>
+                          <div className="bg-amber-100/60 backdrop-blur-sm p-3 rounded border border-amber-200/50">
+                            <p className="text-black font-semibold">Tecpatl (Flint)</p>
+                            <p className="text-black/80">6pm CST</p>
+                          </div>
+                          <div className="bg-amber-100/60 backdrop-blur-sm p-3 rounded border border-amber-200/50">
+                            <p className="text-black font-semibold">Calli (House)</p>
+                            <p className="text-black/80">12am — midnight CST</p>
+                          </div>
+                        </div>
+                        <p>
+                          These four 6-hour quarters together account for the ~6-hour annual drift between the
+                          Xiuhpohualli and the solar year — the same drift that the Gregorian calendar corrects
+                          with a leap day every four years. After 52 years both the 260-day and 365-day calendars
+                          return to the same position, completing the Calendar Round.
                         </p>
                         <div className="bg-amber-100/60 backdrop-blur-sm p-3 rounded border border-amber-200/50 mt-3">
                           <p className="text-black mb-2">Current Year (2025):</p>
                           <p className="text-black/90">
-                            <strong>13 Calli (13 House)</strong> — begins March 12, 2025 at 6pm
+                            <strong>13 Calli (13 House)</strong> — begins March 12, 2025 at midnight (12am CST)
+                          </p>
+                        </div>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="item-7">
+                    <AccordionTrigger className="text-white hover:text-white/80">
+                      The Nemontemi — The 5 Empty Days
+                    </AccordionTrigger>
+                    <AccordionContent className="text-white/80">
+                      <div className="space-y-3">
+                        <p>
+                          After the 18 regular months of the Xiuhpohualli come the <strong>Nemontemi</strong> — five
+                          nameless, empty days that close the solar year. Falling at the very end of the 365-day cycle
+                          (days 361–365), these days sit outside the normal flow of time and sacred energy.
+                        </p>
+                        <p>
+                          The Aztecs regarded the Nemontemi as a liminal, unlucky period. Ordinary life came to a pause:
+                          people avoided starting new endeavors, conflicts, or celebrations. Instead, communities turned
+                          inward — fasting, resting, and performing quiet rituals of cleansing and renewal to prepare
+                          themselves spiritually for the new year ahead.
+                        </p>
+                        <p>
+                          Far from being a curse, the Nemontemi were seen as a necessary threshold — a sacred pause woven
+                          into the fabric of time itself, allowing the world to breathe before the next great cycle began.
+                        </p>
+                        <div className="bg-amber-100/60 backdrop-blur-sm p-3 rounded border border-amber-200/50 mt-2">
+                          <p className="text-black font-semibold mb-1">The 5 Nemontemi Days</p>
+                          <p className="text-black/80">
+                            Day 361 → Day 365 of the Xiuhpohualli year (following the month of Izcalli).
+                            Each day is unnamed and carries no day sign patron — they belong to no trecena
+                            and hold no place in the Tonalpohualli.
                           </p>
                         </div>
                       </div>
@@ -558,6 +666,21 @@ export default function App() {
                 This calculator honors the sacred calendar system of the Aztec people. The Tonalpohualli represents
                 centuries of astronomical observation, spiritual wisdom, and cultural heritage. We present it with
                 deep respect for its historical and ongoing significance to indigenous peoples of Mexico.
+              </p>
+            </div>
+          </Card>
+
+          <Card className="bg-white/20 backdrop-blur-md border border-white/30 shadow-lg">
+            <div className="p-5 text-center">
+              <p className="text-white/50 text-xs uppercase tracking-widest font-semibold mb-2">Source & Attribution</p>
+              <p className="text-white/80 text-sm italic">
+                Calendar data and correlations taken from:
+              </p>
+              <p className="text-white text-sm font-semibold mt-1">
+                <span className="italic">Cauhpohualli: Cómputo del tiempo azteca y su correlación actual</span>
+              </p>
+              <p className="text-white/80 text-sm mt-0.5">
+                by Arturo Meza Gutiérrez
               </p>
             </div>
           </Card>
