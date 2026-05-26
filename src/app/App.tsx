@@ -682,6 +682,9 @@ export default function App() {
               <p className="text-white/80 text-sm mt-0.5">
                 by Arturo Meza Gutiérrez
               </p>
+              <hr className="border-white/20 my-3" />
+              <p className="text-white/80 text-sm italic">Audio:</p>
+              <p className="text-white text-sm font-semibold mt-1">Gabriel Rivera</p>
             </div>
           </Card>
         </div>
