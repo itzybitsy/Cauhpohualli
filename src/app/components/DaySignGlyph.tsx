@@ -16,7 +16,7 @@ const daySignImages: Record<number, { src: string; alt: string }> = {
   7:  { src: '/day-signs/mazatl.svg',       alt: 'Mazatl - Deer' },
   8:  { src: '/day-signs/tochtli.svg',      alt: 'Tochtli - Rabbit' },
   9:  { src: '/day-signs/atl.svg',          alt: 'Atl - Water' },
-  10: { src: '/day-signs/izquintli.svg',     alt: 'Itzcuintli - Dog' },
+  10: { src: '/day-signs/itzcuintli.svg',    alt: 'Itzcuintli - Dog' },
   11: { src: '/day-signs/ozomatli.svg',     alt: 'Ozomatli - Monkey' },
   12: { src: '/day-signs/malinalli.svg',    alt: 'Malinalli - Grass' },
   13: { src: '/day-signs/acatl.svg',        alt: 'Acatl - Reed' },
