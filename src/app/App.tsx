@@ -113,7 +113,7 @@ export default function App() {
               {today.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
             </p>
             
-            <div className="flex flex-col md:flex-row items-start justify-center divide-y md:divide-y-0 md:divide-x divide-white/30">
+            <div className="flex flex-col md:flex-row items-center md:items-start justify-center divide-y md:divide-y-0 md:divide-x divide-white/30">
               {/* Day Sign */}
               <div className="text-center px-8 py-4">
                 <p className="text-white/60 mb-2 text-xs uppercase tracking-widest font-semibold">Day Sign</p>
@@ -146,7 +146,7 @@ export default function App() {
                 <p className="text-white/80 mt-2 italic text-sm">
                   {todayDaySign.meaning}
                 </p>
-                <p className="text-white/70 mt-3 text-sm max-w-xs text-left">
+                <p className="text-white/70 mt-3 text-sm max-w-xs text-center md:text-left">
                   {todayDaySign.characteristics}
                 </p>
               </div>
